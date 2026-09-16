@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import ChatModal from './components/ChatModal';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activePage, setActivePage] = useState('dashboard');
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,8 +35,11 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
-        {activePage === 'dashboard' && <Dashboard />}
+        {activePage === 'dashboard' && <Dashboard onChatOpen={() => setChatOpen(true)} />}
       </main>
+
+      {/* Chat Modal */}
+      <ChatModal isOpen={chatOpen} onClose={() => setChatOpen(false)} />
 
       {/* Mobile menu overlay */}
       {sidebarOpen && window.innerWidth < 768 && (
